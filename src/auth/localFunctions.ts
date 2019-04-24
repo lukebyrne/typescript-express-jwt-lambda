@@ -76,7 +76,7 @@ const generateJWT = (
   rolesArray: string[],
 ): string => {
   let claims: typeClaims = {
-    sub: userId,
+    sub: `${userId}`,
     email: email
   }
   const token: string = jwt.sign(claims, privateKey, { algorithm: 'RS256' })
