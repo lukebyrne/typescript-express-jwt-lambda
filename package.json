@@ -1,0 +1,51 @@
+{
+  "name": "express-passport",
+  "version": "1.0.0",
+  "main": "app.js",
+  "license": "MIT",
+  "scripts": {
+    "tsc": "tsc",
+    "dev": "ts-node-dev --respawn --transpileOnly ./src/server.ts",
+    "prod": "tsc && node ./build/server.js",
+    "test": "jest && tsc --noEmit",
+    "testwatch": "NODE_ENV=test jest --watch"
+  },
+  "dependencies": {
+    "bcrypt-nodejs": "^0.0.3",
+    "body-parser": "^1.18.3",
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4",
+    "express-session": "^1.16.1",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.16.5",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7",
+    "pg": "^7.10.0",
+    "serverless-http": "^2.0.1"
+  },
+  "devDependencies": {
+    "@types/bcrypt-nodejs": "^0.0.30",
+    "@types/body-parser": "^1.17.0",
+    "@types/express": "^4.16.1",
+    "@types/express-session": "^1.15.12",
+    "@types/jest": "^24.0.11",
+    "@types/jsonwebtoken": "^8.3.2",
+    "@types/knex": "^0.16.1",
+    "@types/passport": "^1.0.0",
+    "@types/supertest": "^2.0.7",
+    "jest": "^24.7.1",
+    "multiline": "^2.0.0",
+    "prettier": "^1.17.0",
+    "serverless": "^1.41.0",
+    "serverless-offline": "^4.9.4",
+    "serverless-webpack": "^5.2.0",
+    "supertest": "^4.0.2",
+    "ts-jest": "^24.0.2",
+    "ts-loader": "^5.3.3",
+    "ts-node-dev": "^1.0.0-pre.32",
+    "typescript": "^3.4.3",
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.1"
+  }
+}
