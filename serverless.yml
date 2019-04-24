@@ -1,4 +1,4 @@
-service: express-passport
+service: typescript-express-jwt-lambda
 
 provider:
   name: aws

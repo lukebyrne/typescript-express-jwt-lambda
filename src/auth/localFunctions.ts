@@ -14,7 +14,7 @@ import {
 } from './localTypes'
 
 
-export const hashPassword = (password: string): string => {
+const hashPassword = (password: string): string => {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(10))
 }
 
