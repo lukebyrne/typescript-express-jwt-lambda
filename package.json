@@ -22,7 +22,8 @@
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
     "pg": "^7.10.0",
-    "serverless-http": "^2.0.1"
+    "serverless-http": "^2.0.1",
+    "source-map-support": "^0.5.12"
   },
   "devDependencies": {
     "@types/bcrypt-nodejs": "^0.0.30",
