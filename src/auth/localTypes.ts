@@ -1,7 +1,7 @@
 export type typeUser = { id: number; email: string; password: string }
 
 export type typeClaims = {
-  sub: number
+  sub: string
   email: string
 }
 
