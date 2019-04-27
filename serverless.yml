@@ -13,6 +13,10 @@ plugins:
   - serverless-webpack
   - serverless-offline
 
+custom:
+  webpack:
+    packager: 'yarn'
+
 functions:
   http:
     handler: src/lambda.handler
