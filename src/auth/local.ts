@@ -61,10 +61,10 @@ router.post(
 )
 
 router.get('/failure', (
-  console.error('--- FAILURE ---')
   req: express.Request,
   res: express.Response,
 ): void => {
+  console.error('--- FAILURE ---')
   res.send('failure')
 })
 
