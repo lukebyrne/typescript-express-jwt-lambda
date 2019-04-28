@@ -36,11 +36,11 @@ passport.use(
 )
 
 
-
 // curl --header "Content-Type: application/json" --request POST --data '{ "email": "me@lukebyrne.com", "password": "abcd1234" }' http://localhost:4000/api/user/register
 router.post(
   '/register',
   (req: express.Request, res: express.Response): void => {
+    console.log('--- REGISTER ---')
     const body: any = req.body
     const email: string = body.email
     const password: string = body.password
@@ -61,6 +61,7 @@ router.post(
 )
 
 router.get('/failure', (
+  console.error('--- FAILURE ---')
   req: express.Request,
   res: express.Response,
 ): void => {
@@ -74,6 +75,7 @@ router.post(
     failureRedirect: '/api/user/failure',
     // successRedirect: '/api/jwt/set',
   }), (req: express.Request, res: express.Response): void => {
+    console.log('--- LOGIN ---')
     signInUser(req, res)
   }
 )
