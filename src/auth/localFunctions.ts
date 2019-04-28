@@ -13,7 +13,6 @@ import {
   typeRole
 } from './localTypes'
 
-
 const hashPassword = (password: string): string => {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(10))
 }
@@ -75,9 +74,9 @@ const generateJWT = (
   email: string,
   rolesArray: string[],
 ): string => {
-  let claims: typeClaims = {
+  const claims: typeClaims = {
     sub: `${userId}`,
-    email: email
+    email
   }
   const token: string = jwt.sign(claims, privateKey, { algorithm: 'RS256' })
   const decoded: any = jwt.verify(token, publicKey)
