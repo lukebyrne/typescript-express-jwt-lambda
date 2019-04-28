@@ -1,6 +1,6 @@
-
-const path = require('path')
-const slsw = require('serverless-webpack')
+const webpack = require('webpack')
+const path = require('path');
+const slsw = require('serverless-webpack');
 
 module.exports = {
   entry: slsw.lib.entries,
@@ -13,13 +13,13 @@ module.exports = {
       '.tsx'
     ]
   },
-  // optimization: {
-  //   minimize: false
-  // },
   output: {
-    libraryTarget: 'commonjs2',
+    libraryTarget: 'commonjs',
     path: path.join(__dirname, '.webpack'),
     filename: '[name].js'
+  },
+  optimization: {
+    minimize: false
   },
   target: 'node',
   module: {
@@ -34,8 +34,16 @@ module.exports = {
       }
     ]
   },
-  externals: {
-    knex: 'commonjs knex',
-    express: 'commonjs express'
-  }
+  plugins: [
+    new webpack.IgnorePlugin(/mariasql/, /\/knex\//),
+    new webpack.IgnorePlugin(/mssql/, /\/knex\//),
+    new webpack.IgnorePlugin(/mysql/, /\/knex\//),
+    new webpack.IgnorePlugin(/mysql2/, /\/knex\//),
+    new webpack.IgnorePlugin(/oracle/, /\/knex\//),
+    new webpack.IgnorePlugin(/oracledb/, /\/knex\//),
+    new webpack.IgnorePlugin(/pg-query-stream/, /\/knex\//),
+    new webpack.IgnorePlugin(/sqlite3/, /\/knex\//),
+    new webpack.IgnorePlugin(/strong-oracle/, /\/knex\//),
+    new webpack.IgnorePlugin(/pg-native/, /\/pg\//),
+  ]
 }

@@ -5,6 +5,7 @@ provider:
   runtime: nodejs8.10
   stage: production
   region: us-west-2
+  timeout: 30
   environment:
     DATABASE_URL: postgresql://deploy:deletemesoon@typescript-express-jwt-lambda.cwrvwdxpik9v.us-west-2.rds.amazonaws.com/jwt
     NODE_ENV: production
