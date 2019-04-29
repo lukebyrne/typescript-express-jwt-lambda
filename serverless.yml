@@ -10,6 +10,9 @@ provider:
     DATABASE_URL: postgresql://deploy:deletemesoon@typescript-express-jwt-lambda.cwrvwdxpik9v.us-west-2.rds.amazonaws.com/jwt
     NODE_ENV: production
 
+package:
+  excludeDevDependencies: true
+
 plugins:
   - serverless-webpack
   - serverless-offline
