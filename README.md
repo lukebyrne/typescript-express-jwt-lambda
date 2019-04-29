@@ -1,7 +1,7 @@
 ## typescript-express-jwt-lambda
 
 ### TODO
-- Get the aysnc/await working with AWS Lambda on prod (or revert back to `then()`` methods)
+- Get the aysnc/await working with AWS Lambda on prod (or revert back to `then()` methods)
 - Remove fevDependencies from package.json on deploy
 
 
