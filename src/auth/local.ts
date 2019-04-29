@@ -39,23 +39,22 @@ passport.use(
 router.post(
   '/register',
   (req: express.Request, res: express.Response): void => {
-    console.log('--- REGISTER ---')
-    // const body: any = req.body
-    // const email: string = body.email
-    // const password: string = body.password
-    //
-    // const register = async () => {
-    //   try {
-    //     const user: typeUser = await knex('users')
-    //       .where({ email })
-    //       .first()
-    //     handleRegister(user, email, password, res)
-    //   } catch (err) {
-    //     console.error(err)
-    //     res.status(500).send(err)
-    //   }
-    // }
-    // register()
+    const body: any = req.body
+    const email: string = body.email
+    const password: string = body.password
+
+    const register = async () => {
+      try {
+        const user: typeUser = await knex('users')
+          .where({ email })
+          .first()
+        handleRegister(user, email, password, res)
+      } catch (err) {
+        console.error(err)
+        res.status(500).send(err)
+      }
+    }
+    register()
   },
 )
 
@@ -63,7 +62,6 @@ router.get('/failure', (
   req: express.Request,
   res: express.Response,
 ): void => {
-  console.error('--- FAILURE ---')
   res.send('failure')
 })
 
@@ -74,7 +72,6 @@ router.post(
     failureRedirect: '/api/user/failure',
     // successRedirect: '/api/jwt/set',
   }), (req: express.Request, res: express.Response): void => {
-    console.log('--- LOGIN ---')
     signInUser(req, res)
   }
 )
