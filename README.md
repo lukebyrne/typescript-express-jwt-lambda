@@ -1,5 +1,10 @@
 ## typescript-express-jwt-lambda
 
+### TODO
+- Get the aysnc/await working with AWS Lambda on prod (or revert back to `then()`` methods)
+- Remove fevDependencies from package.json on deploy
+
+
 This is a boilerplate app that provides a register/login endpoint on AWS Lambda via the Serverless.com framework.
 
 Its sole puprose is to provide the ability to:
