@@ -35,28 +35,27 @@ passport.use(
   ),
 )
 
-
 // curl --header "Content-Type: application/json" --request POST --data '{ "email": "me@lukebyrne.com", "password": "abcd1234" }' http://localhost:4000/api/user/register
 router.post(
   '/register',
   (req: express.Request, res: express.Response): void => {
     console.log('--- REGISTER ---')
-    const body: any = req.body
-    const email: string = body.email
-    const password: string = body.password
-
-    const register = async () => {
-      try {
-        const user: typeUser = await knex('users')
-          .where({ email })
-          .first()
-        handleRegister(user, email, password, res)
-      } catch (err) {
-        console.error(err)
-        res.status(500).send(err)
-      }
-    }
-    register()
+    // const body: any = req.body
+    // const email: string = body.email
+    // const password: string = body.password
+    //
+    // const register = async () => {
+    //   try {
+    //     const user: typeUser = await knex('users')
+    //       .where({ email })
+    //       .first()
+    //     handleRegister(user, email, password, res)
+    //   } catch (err) {
+    //     console.error(err)
+    //     res.status(500).send(err)
+    //   }
+    // }
+    // register()
   },
 )
 

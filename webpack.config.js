@@ -1,6 +1,6 @@
 const webpack = require('webpack')
-const path = require('path');
-const slsw = require('serverless-webpack');
+const path = require('path')
+const slsw = require('serverless-webpack')
 
 module.exports = {
   entry: slsw.lib.entries,
@@ -18,9 +18,9 @@ module.exports = {
     path: path.join(__dirname, '.webpack'),
     filename: '[name].js'
   },
-  optimization: {
-    minimize: false
-  },
+  // optimization: {
+  //   minimize: false
+  // },
   target: 'node',
   module: {
     rules: [
