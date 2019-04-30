@@ -4,7 +4,8 @@ import express = require('express')
 const router = express.Router()
 import passport = require('passport')
 import { knex } from '../knex'
-import { handleSignin, handleRegister, signInUser } from './localFunctions'
+import { hashPassword, generateJWT, comparePassword } from './localFunctions'
+import { typeUser, typeRoles, typeRole } from './localTypes'
 const LocalStrategy = require('passport-local').Strategy
 
 const options: { usernameField: string; passwordField: string } = {
@@ -12,27 +13,31 @@ const options: { usernameField: string; passwordField: string } = {
   passwordField: 'password',
 }
 
-import { typeUser } from './localTypes'
-
 passport.use(
   new LocalStrategy(
     options,
     (email: string, password: string, done: Function): void => {
-      const signInUserFunc = async () => {
-        try {
-          const user: typeUser = await knex
-            .from('users')
-            .where({ email })
-            .first()
-          handleSignin(password, user, done)
-        } catch (err) {
-          console.error(err)
+      knex.from('users').where({ email }).first()
+      .then((user: typeUser) => {
+        if (user) {
+          if (comparePassword(password, user.password)) {
+            console.log('Success, we are logged in!')
+            return done(null, user)
+          } else {
+            console.log('Passwords dont match')
+            return done(null, false)
+          }
+        } else {
+          console.log('No user with that email')
           return done(null, false)
         }
-      }
-      signInUserFunc()
-    },
-  ),
+      })
+      .catch((err) => {
+        console.error(err)
+        return done(null, false)
+      })
+    }
+  )
 )
 
 // curl --header "Content-Type: application/json" --request POST --data '{ "email": "me@lukebyrne.com", "password": "abcd1234" }' http://localhost:4000/api/user/register
@@ -43,24 +48,33 @@ router.post(
     const email: string = body.email
     const password: string = body.password
 
-    const register = async () => {
-      try {
-        const user: typeUser = await knex('users')
-          .where({ email })
-          .first()
-        handleRegister(user, email, password, res)
-      } catch (err) {
-        console.error(err)
-        res.status(500).send(err)
+    knex('users').where({ email }).first()
+    .then((user: typeUser) => {
+      if (user) {
+        res.status(500).send('Email already exists')
+      } else {
+        const insertUser = {
+          email,
+          password: hashPassword(password),
+        }
+        knex('users').insert(insertUser).returning(['id', 'email'])
+        .then((user: typeUser) => {
+          res.send(user)
+        })
+        .catch((err) => {
+          console.error(err)
+          res.status(500).send(err)
+        })
       }
-    }
-    register()
-  },
+    })
+    .catch((err) => {
+      console.error(err)
+      res.status(500).send(err)
+    })
+  }
 )
 
-router.get('/failure', (
-  req: express.Request,
-  res: express.Response,
+router.get('/failure', (res: express.Response
 ): void => {
   res.send('failure')
 })
@@ -72,7 +86,25 @@ router.post(
     failureRedirect: '/api/user/failure',
     // successRedirect: '/api/jwt/set',
   }), (req: express.Request, res: express.Response): void => {
-    signInUser(req, res)
+    knex.select('name').from('roles')
+    .leftJoin('users_roles', 'roles.id', 'users_roles.role_id')
+    .where({ 'users_roles.user_id': req.user.id })
+    .then((roles: typeRoles) => {
+      const rolesArray: string[] = roles.map((role: typeRole) => {
+        return role.name
+      })
+      const jwt: string = generateJWT(
+        req.user.id,
+        req.user.email,
+        rolesArray,
+      )
+      res.setHeader('Content-Type', 'application/json')
+      res.send(JSON.stringify({ jwt }))
+    })
+    .catch((err) => {
+      console.error(err)
+      res.status(500).send(err)
+    })
   }
 )
 
